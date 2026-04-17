@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONLY FOR MY BE!</title>
+    <!-- Font Lucu dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #ffe4e1;
+            --pink-soft: #ffc0cb;
+            --pink-bright: #ff69b4;
+            --pink-dark: #d63384;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--pink-light), var(--pink-soft));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        /* HALAMAN LOGIN */
+        #loginPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--pink-light), var(--pink-soft));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        #loginPage.hidden {
+            display: none;
+        }
+
+        .login-container {
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+            max-width: 350px;
+            width: 90%;
+            border: 4px solid var(--white);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .login-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.8rem;
+            color: var(--pink-dark);
+            margin: 0 0 10px 0;
+        }
+
+        .login-subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--pink-dark);
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--pink-soft);
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            transition: 0.3s all;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--pink-bright);
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+        }
+
+        .btn-login {
+            background: linear-gradient(45deg, var(--pink-bright), var(--pink-dark));
+            color: white;
+            border: none;
+            padding: 13px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s all;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .btn-login:active {
+            transform: scale(0.95);
+        }
+
+        .login-error {
+            color: #d63384;
+            font-size: 0.85rem;
+            margin-top: -10px;
+            display: none;
+            text-align: center;
+        }
+
+        /* BINGKAI FOTO LUCU */
+        .photo-frame {
+            position: relative;
+            width: 280px;
+            height: 350px;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.3);
+            animation: bounce 3s infinite;
+            transform-origin: bottom;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--pink-bright);
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .photo-frame::after {
+            content: '💕';
+            position: absolute;
+            font-size: 2rem;
+            bottom: -15px;
+            right: -15px;
+            opacity: 0.3;
+            animation: rotate 4s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .frame-decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 15px solid var(--pink-light);
+            border-radius: 30px;
+            pointer-events: none;
+            box-shadow: inset 0 0 20px rgba(255, 105, 180, 0.1);
+            z-index: 2;
+        }
+
+        /* HALAMAN UTAMA (dipunyai sebelumnya) */
+        #mainPage {
+            display: none;
+        }
+
+        #mainPage.visible {
+            display: flex;
+        }
+
+        /* Container Kartu Utama */
+        .container {
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+            max-width: 450px;
+            width: 90%;
+            border: 4px solid var(--white);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Dekorasi Atas */
+        .header-decor {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.5rem;
+            color: var(--pink-dark);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: #777;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .panggilan-sayang {
+            display: inline-block;
+            background: var(--pink-bright);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Pemutar Musik */
+        .music-box {
+            margin: 30px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            border: 1px dashed var(--pink-bright);
+        }
+
+        .music-box p {
+            font-size: 0.8rem;
+            color: var(--pink-dark);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        audio {
+            width: 100%;
+            height: 35px;
+        }
+
+        /* Tombol */
+        .btn-surprise {
+            background: linear-gradient(135deg, #ff69b4, #d63384, #ff1493);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 3s ease-in-out infinite;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-surprise::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-surprise:hover::before {
+            left: 100%;
+        }
+
+        .btn-surprise:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(135deg, #ff1493, #d63384, #ff69b4);
+        }
+
+        .btn-surprise:active {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Tombol Video Stylish */
+        .btn-video {
+            background: linear-gradient(135deg, #ff9ff3, #f368e0, #ff6b9d);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 3s ease-in-out infinite;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-video::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-video:hover::before {
+            left: 100%;
+        }
+
+        .btn-video:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(135deg, #ff6b9d, #f368e0, #ff9ff3);
+        }
+
+        .btn-video:active {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6), 0 0 30px rgba(255, 105, 180, 0.3);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Pop-up Pesan Rahasia */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex !important;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            max-width: 400px;
+            position: relative;
+            animation: slideUp 0.5s ease-out;
+            border: 8px solid var(--pink-light);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content h3 {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.5rem;
+            color: var(--pink-dark);
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            line-height: 1.6;
+            color: #444;
+            font-size: 1rem;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            background: #eee;
+            color: #555;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            background: #ddd;
+        }
+
+        /* HALAMAN VIDEO */
+        #videoPage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        #videoPage.visible {
+            display: flex;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .video-frame {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.3);
+            animation: wiggle 2s infinite;
+            border: 4px solid var(--pink-light);
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-frame::before {
+            content: '🎥';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            font-size: 2rem;
+            background: var(--pink-bright);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            z-index: 1;
+        }
+
+        .video-frame::after {
+            content: '💖';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            font-size: 1.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .btn-back {
+            background: linear-gradient(45deg, var(--pink-soft), var(--pink-bright));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s all;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .btn-back:active {
+            transform: scale(0.95);
+        }
+
+        /* Latar Belakang Animasi Hati */
+        #heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--pink-bright);
+            font-size: 1.5rem;
+            animation: fall linear forwards;
+            opacity: 0.6;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Konfeti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall linear forwards;
+            z-index: 150;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Floating Decoration */
+        .floating-decoration {
+            position: absolute;
+            animation: float linear forwards;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-10vh); }
+        }
+
+        /* ===== MEDIA QUERIES UNTUK MOBILE ===== */
+        @media (max-width: 768px) {
+            body {
+                min-height: 100vh;
+            }
+
+            /* Login Page Mobile */
+            .photo-frame {
+                width: 220px;
+                height: 280px;
+            }
+
+            .login-container {
+                max-width: 90%;
+                padding: 30px 20px;
+            }
+
+            .login-title {
+                font-size: 2.2rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .input-group input {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+
+            .btn-login {
+                padding: 11px 25px;
+                font-size: 0.95rem;
+            }
+
+            /* Main Page Mobile */
+            .container {
+                max-width: 95%;
+                padding: 30px 15px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+                letter-spacing: 1px;
+                margin-top: 8px;
+            }
+
+            .header-decor {
+                font-size: 2.5rem;
+                margin-bottom: 8px;
+            }
+
+            .panggilan-sayang {
+                padding: 4px 12px;
+                font-size: 0.8rem;
+                margin-top: 8px;
+            }
+
+            p {
+                font-size: 0.9rem;
+                margin-top: 15px !important;
+            }
+
+            .music-box {
+                margin: 20px 0;
+                padding: 12px;
+                border-radius: 15px;
+            }
+
+            .music-box p {
+                font-size: 0.75rem;
+                margin-bottom: 8px;
+            }
+
+            audio {
+                height: 30px;
+            }
+
+            .btn-surprise,
+            .btn-video {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+                margin-top: 8px;
+            }
+
+            .btn-video {
+                margin-top: 15px;
+                padding: 14px 28px;
+            }
+
+            .footer {
+                font-size: 0.8rem;
+                margin-top: 10px;
+            }
+
+            /* Modal Mobile */
+            .modal {
+                padding: 15px;
+            }
+
+            .modal-content {
+                max-width: 90%;
+                padding: 25px 20px;
+                border-radius: 20px;
+                border: 6px solid var(--pink-light);
+            }
+
+            .modal-content h3 {
+                font-size: 2rem;
+            }
+
+            .modal-content p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+
+            .close-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            /* Video Page Mobile */
+            #videoPage {
+                gap: 20px;
+                padding: 15px;
+            }
+
+            #videoPage h1 {
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+
+            #videoPage > p {
+                font-size: 0.85rem;
+                margin-bottom: 20px !important;
+            }
+
+            .video-container {
+                gap: 15px;
+                max-width: 100%;
+            }
+
+            .video-frame {
+                width: 100%;
+                max-width: 280px;
+                height: 180px;
+                border-radius: 15px;
+            }
+
+            .btn-back {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra Small Devices */
+            .photo-frame {
+                width: 180px;
+                height: 240px;
+            }
+
+            .login-container {
+                padding: 25px 15px;
+            }
+
+            .login-title {
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+
+            .login-subtitle {
+                margin-bottom: 15px;
+            }
+
+            .input-group label {
+                font-size: 0.8rem;
+            }
+
+            .input-group input {
+                padding: 9px 10px;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 20px 12px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 0.9rem;
+            }
+
+            .header-decor {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 0.85rem !important;
+            }
+
+            .music-box {
+                padding: 10px;
+                margin: 15px 0;
+            }
+
+            .music-box p {
+                font-size: 0.7rem;
+            }
+
+            audio {
+                height: 28px;
+            }
+
+            .btn-surprise,
+            .btn-video,
+            .btn-login {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                border-radius: 40px;
+            }
+
+            .btn-video {
+                padding: 12px 22px;
+            }
+
+            .modal-content {
+                padding: 20px 15px;
+                border-radius: 18px;
+            }
+
+            .modal-content h3 {
+                font-size: 1.8rem;
+            }
+
+            .modal-content p {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            #videoPage h1 {
+                font-size: 1.7rem;
+            }
+
+            #videoPage > p {
+                font-size: 0.8rem;
+            }
+
+            .video-frame {
+                width: 100%;
+                max-width: 250px;
+                height: 160px;
+            }
+
+            .video-frame::before {
+                width: 35px;
+                height: 35px;
+                font-size: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN LOGIN -->
+    <div id="loginPage">
+        <div class="photo-frame">
+            <img id="photoInput" src="gambar1.jpeg" alt="Foto Cewe">
+            <div class="frame-decor"></div>
+        </div>
+
+        <div class="login-container">
+            <h2 class="login-title">Unlock 🔓</h2>
+            <p class="login-subtitle">Masukkan username & password</p>
+            
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required>
+                </div>
+
+                <div class="login-error" id="loginError">Username atau password salah! 😢</div>
+
+                <button type="submit" class="btn-login">Masuk ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN UTAMA -->
+    <div id="mainPage">
+        <div id="heart-container"></div>
+
+        <!-- Musik Latar Belakang -->
+        <audio id="backgroundAudio" loop preload="auto" style="display: none;">
+            <source src="music1.mp3" type="audio/mpeg">
+            Browser tidak mendukung audio.
+        </audio>
+
+        <div class="container">
+            <div class="header-decor">🎂</div>
+            <h1>Happy Birthday!</h1>
+            <h2 id="display-nama"> SEGNER PRIADA PUTRI </h2>
+            <div class="panggilan-sayang" id="display-panggilan">✨ Sayangku ✨</div>
+            
+            <p style="margin-top: 25px; color: #666;">
+                HAPPY BIRTHDAY to my partner in crime! 🎉 Semoga hari ini kamu merasa seperti princess, karena kamu adalah the best thing that ever happened to me, be! 🥰 Wishes you all the happiness, love, and adventure in the world! 💕
+            </p>
+
+            <div class="music-box">
+                <p>🎵 Play Musik Favorit Kamuuuh, dengerin dulu sampe beres baru buka pesan nya yaaa❤️</p>
+                <!-- Ganti src dengan link lagu .mp3 jika sudah ada -->
+                <audio controls id="birthdayAudio">
+                    <source src="music2.mp3" type="audio/mpeg">
+                    Browser tidak mendukung audio.
+                </audio>
+            </div>
+
+            <button class="btn-surprise" onclick="openModal()">Buka Pesan Kejutan ✨</button>
+            <br><br>
+            <button class="btn-video" onclick="showVideoPage()">Lihat Video Kita 📹</button>
+
+            <div class="footer">
+                Dibuat dengan ❤️ from ur most handsome boys
+            </div>
+        </div>
+
+        <!-- Modal Surat Cinta -->
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <h3>Surat Untukmu...</h3>
+                <p id="pesan-cinta">
+                    "Hai be❤️, Happy birthday, sayang 🎉❤️
+20 April jadi hari spesial bukan cuma buat kamu, tapi juga buat aku karena hari itu dunia dapet versi terbaik dari kamu, dan aku beruntung banget bisa jadi bagian dari hidup kamu sekarang.
+Makasih ya udah selalu ada, selalu sabar, selalu ngertiin aku bahkan di saat aku lagi nyebelin. Kamu tuh bukan cuma pasangan, tapi juga rumah buat aku pulang.
+Semoga di umur yang baru ini, semua hal baik makin deket ke kamu rezeki lancar, mimpi satu-satu ke kejar, dan pastinya tetap jadi kamu yang aku kenal: kuat, manis, dan bikin aku jatuh cinta tiap hari.
+Aku bakal selalu ada buat kamu, nemenin kamu di semua fase senang, susah, semuanya.
+I love you, always 🤍 <br><br>
+                    Semoga panjang umur, sehat selalu, dan semua cita-citamu tercapai. Aku akan selalu ada di sampingmu. I love you so much! ❤️"
+                </p>
+                <button class="close-btn" onclick="closeModal()">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN VIDEO -->
+    <div id="videoPage">
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 3rem; color: var(--pink-dark); margin-bottom: 10px;">Video Kenangan Kita 💕</h1>
+        <p style="font-size: 1.1rem; color: #666; margin-bottom: 30px;">Koleksi momen-momen indah yang kita lalui bersama</p>
+        
+        <div class="video-container">
+            <!-- Video 1 -->
+            <div class="video-frame">
+                <video controls>
+                    <source src="video1.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+            
+            <!-- Video 2 -->
+            <div class="video-frame">
+                <video controls>
+                    <source src="video2.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+            
+            <!-- Video 3 -->
+            <div class="video-frame">
+                <video controls>
+                    <source src="video3.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+            
+            <!-- Video 4 -->
+            <div class="video-frame">
+                <video controls>
+                    <source src="video4.mp4" type="video/mp4">
+                    Browser Anda tidak mendukung tag video.
+                </video>
+            </div>
+        </div>
+        
+        <button class="btn-back" onclick="showMainPage()">Kembali ke Halaman Utama</button>
+    </div>
+
+    <script>
+        // ========== LOGIN SYSTEM ==========
+        // Ubah username dan password sesuai keinginan
+        const LOGIN_CREDENTIALS = {
+            username: "Segner",
+            password: "200404"  // Ganti dengan password yang kamu inginkan
+        };
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('loginError');
+
+            if (username === LOGIN_CREDENTIALS.username && password === LOGIN_CREDENTIALS.password) {
+                // Login berhasil
+                errorElement.style.display = 'none';
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('mainPage').classList.add('visible');
+                
+                // Mulai efek animasi
+                setTimeout(() => {
+                    for(let i=0; i<50; i++) {
+                        setTimeout(createHeart, i * 30);
+                    }
+                }, 500);
+            } else {
+                // Login gagal
+                errorElement.style.display = 'block';
+                document.getElementById('password').value = '';
+                document.getElementById('password').shake?.focus();
+            }
+        }
+
+        // Optional: Untuk mengganti foto, ganti src di bawah
+        // document.getElementById('photoInput').src = 'url-foto-baru';
+
+        // ========== FUNGSI ANIMASI DAN MODAL ==========
+        const heartContainer = document.getElementById('heart-container');
+        const hearts = ['❤️', '💖', '🌸', '✨', '💕'];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            
+            heartContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Fungsi Konfeti
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Fungsi untuk halaman video
+        function showVideoPage() {
+            document.getElementById('mainPage').classList.remove('visible');
+            document.getElementById('videoPage').classList.add('visible');
+            
+            // Efek hati saat masuk halaman video
+            setTimeout(() => {
+                for(let i=0; i<30; i++) {
+                    setTimeout(createHeart, i * 40);
+                }
+            }, 200);
+            
+            // Mulai dekorasi mengapung
+            setInterval(createDecoration, 2000);
+        }
+
+        function showMainPage() {
+            document.getElementById('videoPage').classList.remove('visible');
+            document.getElementById('mainPage').classList.add('visible');
+        }
+
+        // Fungsi dekorasi mengapung
+        function createDecoration() {
+            const decorations = ['🌸', '✨', '💕', '🌟', '🎀', '🦋', '🌈', '🍭', '💖', '🌺'];
+            const decoration = document.createElement('div');
+            decoration.classList.add('floating-decoration');
+            decoration.innerHTML = decorations[Math.floor(Math.random() * decorations.length)];
+            decoration.style.left = Math.random() * 100 + 'vw';
+            decoration.style.animationDuration = Math.random() * 3 + 4 + 's';
+            decoration.style.fontSize = Math.random() * 20 + 15 + 'px';
+            
+            document.body.appendChild(decoration);
+
+            setTimeout(() => {
+                decoration.remove();
+            }, 7000);
+        }
+
+        function openModal() {
+            const modal = document.getElementById('myModal');
+            modal.classList.add('show');
+            // Hentikan musik utama dan putar musik latar dari awal saat modal dibuka
+            const birthdayAudio = document.getElementById('birthdayAudio');
+            birthdayAudio.pause();
+            backgroundAudio.currentTime = 0;
+            backgroundAudio.play();
+            // Tampilkan konfeti saat modal dibuka
+            for(let i=0; i<20; i++) {
+                setTimeout(createConfetti, i * 50);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').classList.remove('show');
+            backgroundAudio.pause();
+        }
+
+        // Tutup modal jika klik di luar area konten
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Kustomisasi nama dan panggilan
+        document.getElementById('display-nama').innerText = "SEGNER PRIADA PUTRI";
+        document.getElementById('display-panggilan').innerText = "✨ My Princess ✨";
+
+        // Musik Latar dan Kontrol
+        const backgroundAudio = document.getElementById('backgroundAudio');
+
+        backgroundAudio.volume = 0.3;
+    </script>
+</body>
+</html>
